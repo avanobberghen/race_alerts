@@ -21,8 +21,10 @@ jobs:
           python-version: '3.12' # Install the Python version needed
 
       # Step 3: Install dependencies
-      - name: Install pandas lxml loguru python-dotenv
-        run: pip pandas lxml loguru python-dotenv
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       # Step 4: Execute the Python script to create a CSV
       - name: Compare tables
