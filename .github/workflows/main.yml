@@ -28,6 +28,14 @@ jobs:
 
       # Step 4: Execute the Python script to create a CSV
       - name: Compare tables
+        env:
+          URL: ${{ secrets.URL }}
+          EMAIL_RECEIVER_LIST: ${{ secrets.EMAIL_RECEIVER_LIST }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          EMAIL_SUBJECT: ${{ secrets.EMAIL_SUBJECT }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          PORT: ${{ secrets.PORT }}
         run: python main.py
 
       # Step 5: Commit and push the generated CSV file if there are changes
