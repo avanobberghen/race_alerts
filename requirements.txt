@@ -1,0 +1,17 @@
+Bottleneck @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_33wnmqdh9g/croot/bottleneck_1731058648266/work
+click @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/click_1699239792454/work
+loguru @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_7778yrp4eo/croot/loguru_1729800302040/work
+lxml==5.3.0
+mkl-fft @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_fft_1699240945874/work
+mkl-random @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mkl_random_1699239515205/work
+mkl-service==2.4.0
+numexpr @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/numexpr_1699258484110/work
+numpy @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_b7iptlxgej/croot/numpy_and_numpy_base_1708638622773/work/dist/numpy-1.26.4-cp312-cp312-macosx_10_9_x86_64.whl#sha256=94ff619271f410d5b23b2f118daf4420d22b48b21c941819693d61b19667808d
+pandas @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_d6o0iypzho/croot/pandas_1732735102618/work/dist/pandas-2.2.3-cp312-cp312-macosx_10_15_x86_64.whl#sha256=92baee76f8e69d2dfc5fc3ec3504a421e6d1f0c940f3e66a168d085ea9dbc453
+python-dateutil @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_efk5_uakg8/croot/python-dateutil_1716495742183/work
+python-dotenv @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/python-dotenv_1699241055777/work
+pytz @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_244ln7biq9/croot/pytz_1713974320727/work
+setuptools==75.1.0
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+tzdata @ file:///croot/python-tzdata_1690578112552/work
+wheel==0.44.0
