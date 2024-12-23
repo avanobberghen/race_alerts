@@ -16,8 +16,6 @@ log_level = "DEBUG"
 log_format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS zz}</green> | <level>{level: <8}</level> | <yellow>Line {line: >4} ({file}):</yellow> <b>{message}</b>"
 logger.add("application.log", level=log_level, format=log_format, colorize=False, backtrace=True, diagnose=True)
 
-#logger.remove() # disable logger
-
 load_dotenv()
 # Get env variables
 try:
@@ -41,9 +39,6 @@ def compare_df(df, last_df):
     added_races_df = added_races_df.drop(columns=['Date_', 'Type_', 'Club_', 'FFC_', 'SLF_', '_merge'])
     # Reordering columns using loc
     reordered_added_races_df = added_races_df.loc[:, ['Date', 'Type', 'Club', 'Intitulé', 'FFC', 'SLF']]
-    # Add index column name
-    reordered_added_races_df.index.name = 'ID'
-    #display(reordered_added_races_df)
 
     # Cancelled races
     cancelled_races_df = cancelled_races_df.drop(columns=['Date', 'Type', 'Club', 'FFC', 'SLF', '_merge'])
@@ -51,9 +46,6 @@ def compare_df(df, last_df):
     reordered_cancelled_races_df = cancelled_races_df.loc[:, ['Date_', 'Type_', 'Club_', 'Intitulé', 'FFC_', 'SLF_']]
     # Rename columns
     reordered_cancelled_races_df.columns = ["Date", "Type", "Club", "Intitulé", "FFC", "SLF"]
-    # Add index column name
-    reordered_cancelled_races_df.index.name = 'ID'
-    #display(reordered_cancelled_races_df)
 
     # Modified races
     # Group by Intitulé having count(Intitulé) > 1
@@ -62,9 +54,6 @@ def compare_df(df, last_df):
     modified_races_df.columns = ["Date", "Type", "Club", "Intitulé", "FFC", "SLF", "Modif"]
     # Map values
     modified_races_df['Modif'] = modified_races_df['Modif'].map({'right_only': 'Avant', 'left_only': 'Après'})
-    # Add index column name
-    modified_races_df.index.name = 'ID'
-    display(modified_races_df)
     
     return reordered_cancelled_races_df, reordered_added_races_df, modified_races_df
 
@@ -131,18 +120,24 @@ try:
             cancelled_df, added_df, modified_df = compare_df(df, last_df)
 
             # format email
-            body = ''
+            body="""
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+            <html>
+            <body style="Margin:0;padding:0;min-width:100%;">
+            <img src="https://www.sportmember.fr/media/W1siZiIsIjIwMjQvMTAvMTgvOGM4ejd3bDRnZF9CYW5uZXJfZW1haWwuanBnIl1d/Banner_email.jpg?sha=c516b6e1cbc1a4c9" alt="CBCV9">
+            """
+
             if not modified_df.empty:
-                body = body + "Courses modifiées:\n\n" + modified_df.to_csv(sep='\t') + "\n"
+                body = body + "<h2>Courses modifiées:</h2>" + modified_df.to_html(index=False)
             if not added_df.empty:
-                body = body + "Courses ajoutées:\n\n" + added_df.to_csv(sep='\t') + "\n"
+                body = body + "<h2>Courses ajoutées:</h2>" + added_df.to_html(index=False)
             if not cancelled_df.empty:
-                body = body + "Courses supprimées:\n\n" + cancelled_df.to_csv(sep='\t') + "\n"
-            #print(body)
+                body = body + "<h2>Courses supprimées:</h2>" + cancelled_df.to_html(index=False)
+            body = body + "</body></html>"
 
             # send email with differences found
             logger.info("Sending an email showing the differences found.")
-            #send_email(receiver, subject, body)
+            send_email(body)
 
             # save the current table as a file
             write_df_to_file(df)
