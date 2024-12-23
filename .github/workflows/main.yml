@@ -29,11 +29,11 @@ jobs:
       # Execute the Python script to create a CSV
       - name: Compare tables
         env:
-          URL: ${{ secrets.URL }}
+          URL: ${{ vars.FSGT68_URL }}
           EMAIL_RECEIVER_LIST: ${{ secrets.EMAIL_RECEIVER_LIST }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-          EMAIL_SUBJECT: ${{ secrets.EMAIL_SUBJECT }}
+          EMAIL_SUBJECT: ${{ vars.FSGT68_EMAIL_SUBJECT }}
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           PORT: ${{ secrets.PORT }}
         run: python main.py
