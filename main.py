@@ -1,15 +1,12 @@
 import pandas as pd
-from datetime import timezone
 import datetime
 import os
 import glob
 from loguru import logger
-import sys
 from dotenv import load_dotenv
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from pathlib import Path
 pd.options.mode.chained_assignment = None  # default='warn'
 
 # Set logger
