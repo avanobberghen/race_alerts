@@ -105,8 +105,8 @@ try:
             raise ValueError("Could not find any archived table files to compare against. Creating one now. Abort!")
 
         # else load latest table and compare it to the current table
-        logger.info("Found a previous table file to compare against.")
         latest_file = max(list_of_files, key=os.path.getctime)
+        logger.info("Found a previous table file to compare against: " + latest_file)
         last_df = pd.read_csv(latest_file)
         last_df.set_index("ID", inplace=True)
         
