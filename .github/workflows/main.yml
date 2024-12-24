@@ -42,7 +42,8 @@ jobs:
       - name: Check for Changes
         id: check_changes
         run: |
-          if [[ -n "$(git diff --exit-code)" ]]; then
+          #if [[ -n "$(git diff --exit-code)" ]]; then
+          if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
             echo "Changes detected."
             echo "::set-output name=has_changes::true"
           else
