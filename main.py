@@ -60,7 +60,7 @@ def compare_df(df, last_df):
 
 # Write table to file
 def write_df_to_file(df):
-    df.to_csv("./tables/table_" + str(datetime.datetime.now().strftime("%Y-%M-%d_%H-%M-%S")) + ".csv")
+    df.to_csv("./tables/table_" + str(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")) + ".csv")
 
 # Send email
 def send_email(body):
