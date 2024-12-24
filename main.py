@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pathlib import Path
 pd.options.mode.chained_assignment = None  # default='warn'
 
 # Set logger
@@ -77,6 +78,10 @@ def send_email(body):
         server.send_message(message)
         server.quit()
 
+def latest_file(path: Path, pattern: str = "table*csv"):
+    files = path.glob(pattern)
+    return max(files, key=lambda x: x.stat().st_ctime)
+
 logger.info("[START]")
 try: 
     # read page's table into a list of dfs
@@ -96,18 +101,15 @@ try:
         # Keep the desired columns only
         df = df[columns_to_keep]
 
-        # Get latest table file
-        list_of_files = glob.glob('./tables/*') # * means all if need specific format then *.csv
-        
-        # if no table file is found, create one and quit.
-        if not list_of_files:
+        # if the tables directory is empty, create a table and exit
+        if not glob.glob('./tables/*'):
             write_df_to_file(df)
             raise ValueError("Could not find any archived table files to compare against. Creating one now. Abort!")
 
         # else load latest table and compare it to the current table
-        latest_file = max(list_of_files, key=os.path.getctime)
-        logger.info("Found a previous table file to compare against: " + latest_file)
-        last_df = pd.read_csv(latest_file)
+        last_file = latest_file(Path('./tables/'))
+        logger.info("Found a previous table file to compare against: " + str(last_file))
+        last_df = pd.read_csv(last_file)
         last_df.set_index("ID", inplace=True)
         
         # if tables are identical then quit
