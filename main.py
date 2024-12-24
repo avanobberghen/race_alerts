@@ -60,7 +60,7 @@ def compare_df(df, last_df):
 
 # Write table to file
 def write_df_to_file(df):
-    df.to_csv("./tables/table_" + str(datetime.datetime.now().strftime("%Y-%b-%d_%H-%M-%S")) + ".csv")
+    df.to_csv("./tables/table_" + str(datetime.datetime.now().strftime("%Y-%M-%d_%H-%M-%S")) + ".csv")
 
 # Send email
 def send_email(body):
@@ -78,9 +78,12 @@ def send_email(body):
         server.send_message(message)
         server.quit()
 
-def latest_file(path: Path, pattern: str = "table*csv"):
-    files = path.glob(pattern)
-    return max(files, key=lambda x: x.stat().st_ctime)
+# Function based file name to get the latest table since Git purposely does not retain timestamps on checkout.
+def get_latest_table(directory):
+    items = os.listdir(directory)
+    sorted_items = sorted(items, reverse=True)
+    last_file = os.path.join(directory, sorted_items[0])
+    return last_file
 
 logger.info("[START]")
 try: 
@@ -103,8 +106,6 @@ try:
 
         # Get latest table file
         list_of_files = glob.glob('./tables/*') # * means all if need specific format then *.csv
-        for file in list_of_files:
-            print(file + " : " + str(Path(file).stat().st_ctime))
 
         # if the tables directory is empty, create a table and exit
         if not list_of_files:
@@ -112,9 +113,9 @@ try:
             raise ValueError("Could not find any archived table files to compare against. Creating one now. Abort!")
 
         # else load latest table and compare it to the current table
-        last_file = latest_file(Path('./tables/'))
-        logger.info("Found a previous table file to compare against: " + str(last_file))
-        last_df = pd.read_csv(last_file)
+        latest_file = get_latest_table('./tables/')
+        logger.info("Found a previous table file to compare against: " + str(latest_file))
+        last_df = pd.read_csv(latest_file)
         last_df.set_index("ID", inplace=True)
         
         # if tables are identical then quit
