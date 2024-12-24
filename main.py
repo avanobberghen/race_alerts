@@ -78,7 +78,7 @@ def send_email(body):
         server.send_message(message)
         server.quit()
 
-# Function based file name to get the latest table since Git purposely does not retain timestamps on checkout.
+# Function based on the filename to get the latest table since Git purposely does not retain timestamps on checkout.
 def get_latest_table(directory):
     items = os.listdir(directory)
     sorted_items = sorted(items, reverse=True)
