@@ -101,8 +101,13 @@ try:
         # Keep the desired columns only
         df = df[columns_to_keep]
 
+        # Get latest table file
+        list_of_files = glob.glob('./tables/*') # * means all if need specific format then *.csv
+        for file in list_of_files:
+            print(file + " : " + str(Path(file).stat().st_ctime))
+
         # if the tables directory is empty, create a table and exit
-        if not glob.glob('./tables/*'):
+        if not list_of_files:
             write_df_to_file(df)
             raise ValueError("Could not find any archived table files to compare against. Creating one now. Abort!")
 
