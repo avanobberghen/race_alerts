@@ -1,12 +1,12 @@
 name: Compare tables and send diff by email
 
 # Configure Manual Trigger
-#on:
-#  workflow_dispatch:
-
 on:
-  schedule:
-    - cron: '0 10/8 * * *' # At minute 0 past every 8th hour from 10 through 23
+  workflow_dispatch:
+
+#on:
+#  schedule:
+#    - cron: '0 10/8 * * *' # At minute 0 past every 8th hour from 10 through 23
 
 jobs:
   compare-tables-and-send-email:
